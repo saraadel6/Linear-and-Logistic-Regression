@@ -1,5 +1,6 @@
 import ml_assignment1 as d
-from sklearn.metrics import r2_score
+from sklearn.metrics import r2_score #for R2
+import matplotlib.pyplot as plot # for graph of MSE
 
 def readCSV_data(test = 0):
     if test == 1:
@@ -69,6 +70,7 @@ def GD_W2(w1,w2,b,test = 0):
 def GD_B(w1,w2,b, test= 0):
     return Equation(w1,w2,b,1,1,test)
 
+cnt =0
 w1 =0.0
 w1_old = 0.0
 w2 =0.0
@@ -76,17 +78,23 @@ w2_old = 0.0
 b = 0.0
 alpha = 0.01
 old_train_MSE = float('inf')
+error_values =[]
+iterations_cnt=[]
 
 while costFunction(w1,w2,b) < old_train_MSE:
     old_train_MSE =costFunction(w1,w2,b)
+    error_values.append(old_train_MSE)
     w1 = w1_old - (alpha * GD_W1(w1,w2,b))
     w2 = w2_old - (alpha * GD_W2(w1_old,w2,b))
     b = b - (alpha * GD_B(w1_old,w2_old,b))
     w1_old = w1
     w2_old = w2
+    cnt+=1
+    iterations_cnt.append(cnt)
+
 
 print("W1=",w1,"/ W2=",w2,"/ b=",b)
-print(old_train_MSE)
+print("MSE = ",old_train_MSE)
 
 # print(testData)
 predict = []
@@ -95,8 +103,15 @@ for i in testData:
     predict.append(calc_y_dash(w1,w2,b,i[0],i[1]))
     te.append(i[2])
 
-print(r2_score(te, predict)) 
-# print("y dash =",calc_y_dash(w1,w2,b,testData[0][0],testData[0][1]))
-# print("y=",testData[0][2])
-#print(sum(w1,w2,b,1,2)) # y dash will be approx equal to 2X
+print("R2 = ",r2_score(te, predict))
 
+plot.figure(figsize=(8, 5))
+plot.plot(iterations_cnt, error_values, marker='o', linestyle='-', color='blue', label='MSE')
+
+# Label the axes and the plot
+plot.xlabel("Iterations")
+plot.ylabel("Mean Squared Error (MSE)")
+plot.title("Error Improvement over Iterations")
+plot.legend()
+plot.grid(True)
+plot.show()
