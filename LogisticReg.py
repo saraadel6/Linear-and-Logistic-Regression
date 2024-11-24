@@ -1,7 +1,6 @@
 import ml_assignment1 as d
 from sklearn.linear_model import SGDClassifier
 from sklearn.metrics import accuracy_score
-import matplotlib.pyplot as plt
 
 # selected features
 x_train_features = d.X_train[['Engine Size(L)', 'Fuel Consumption City (L/100 km)']]
