@@ -12,16 +12,19 @@ missing_values = data.isnull().sum()
 
 # b) ii) check whether numeric features have the same scale
 numeric_cols = data.select_dtypes(include=['float64', 'int64']).columns
-for col in numeric_cols:
-    print(f"{col}: Min = {data[col].min()}, Max = {data[col].max()}")
+# for col in numeric_cols:
+#     print(f"{col}: Min = {data[col].min()}, Max = {data[col].max()}")
 
 # b) iii) visualize a pairplot in which diagonal subplots are histograms
 sns.pairplot(data, diag_kind='hist')
+plt.show()
+
 
 # b) iv) visualize a correlation heatmap between numeric columns
 numeric_data = data.select_dtypes(include=['float64', 'int64'])
 sns.heatmap(numeric_data.corr(),annot=True,cmap='summer')
 plt.title("Correlation Heatmap for Numeric Columns")
+plt.show()
 
 # c) i) the features and targets are separated
 x = data.iloc[:, :-2]
@@ -40,6 +43,9 @@ targetCols = y.select_dtypes(include=['object']).columns
 for target_col in targetCols:
     target_encoder = LabelEncoder()
     y[target_col] = target_encoder.fit_transform(y[target_col])
+# print(x)
+# print(y)
+
 
 # c) iii) the data is shuffled and split into training and testing sets
 from sklearn.utils import shuffle
@@ -50,10 +56,6 @@ X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_
 # print (X_test)
 # print (y_train)
 # print (y_test)
-# len(X_train)
-# len(X_test)
-# len(y_train)
-# len(y_test)
 
 # c) iv) numeric features are scaled
 from sklearn.preprocessing import StandardScaler
@@ -61,4 +63,4 @@ scaler = StandardScaler()
 numeric = X_train.select_dtypes(include=['float64', 'int64']).columns
 X_train[numeric] = scaler.fit_transform(X_train[numeric])
 X_test[numeric] = scaler.transform(X_test[numeric])
-# print(X_train.head())
+# print(X_train)

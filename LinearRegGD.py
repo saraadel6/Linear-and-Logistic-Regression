@@ -13,9 +13,6 @@ def readCSV_data(test = 0):
         y = d.y_train['CO2 Emissions(g/km)'] #y
     
     data = [list(pair) + [target] for pair, target in zip(zip(feature1, feature2), y)]
-    # data2 =[]
-    # for i in range(0,5):
-    #     data2.append(data[i])
     return data
 
 trainData= readCSV_data()
