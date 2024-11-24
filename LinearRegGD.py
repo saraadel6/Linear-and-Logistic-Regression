@@ -32,11 +32,8 @@ def summation(y_dash, y_actual, sq = 1):
         return (y_dash-y_actual)
 
     
-def Equation(w1,w2,b,constant, der = 0,var = 0,test = 0):
-    if test == 1:
-        data = testData
-    else:
-        data = trainData
+def Equation(w1,w2,b,constant, der = 0,var = 0):
+    data = trainData
     m = len(data)
 
     EQ = (1/m) * constant
@@ -57,18 +54,18 @@ def Equation(w1,w2,b,constant, der = 0,var = 0,test = 0):
     return EQ
 
 #__________{{ MSE COST FUNCTION }}______________
-def costFunction(w1,w2,b, test=0):
-    return Equation(w1,w2,b,(1/2),test)
+def costFunction(w1,w2,b):
+    return Equation(w1,w2,b,(1/2))
 
 #______________{{ GRADIENT DESCENT }}________
-def GD_W1(w1,w2,b,test = 0):
-    return Equation(w1,w2,b,1,1,1,test)
+def GD_W1(w1,w2,b):
+    return Equation(w1,w2,b,1,1,1)
 
-def GD_W2(w1,w2,b,test = 0):
-    return Equation(w1,w2,b,1,1,2,test)
+def GD_W2(w1,w2,b):
+    return Equation(w1,w2,b,1,1,2)
 
-def GD_B(w1,w2,b, test= 0):
-    return Equation(w1,w2,b,1,1,test)
+def GD_B(w1,w2,b):
+    return Equation(w1,w2,b,1,1)
 
 cnt =0
 w1 =0.0
@@ -104,6 +101,8 @@ for i in testData:
     te.append(i[2])
 
 print("R2 = ",r2_score(te, predict))
+
+
 
 plot.figure(figsize=(8, 5))
 plot.plot(iterations_cnt, error_values, marker='o', linestyle='-', color='blue', label='MSE')
